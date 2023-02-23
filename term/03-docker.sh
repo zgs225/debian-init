@@ -42,13 +42,15 @@ if [ ! -s "${DOCKER_SERVICE_FILE}" ]; then
 	sudo chown ${USER} "${DOCKER_SERVICE_FILE}"
 	cat <<-EOF  > "${DOCKER_SERVICE_FILE}"
 	[Service]
-	Environment="HTTP_RPOXY=http://127.0.0.1:7890"
-	Environment="HTTPS_RPOXY=http://127.0.0.1:7890"
-	Environment="NO_PROXY=127.0.0.0/8,localhost,::1,.local"
+	Environment="http_proxy=http://127.0.0.1:7890"
+	Environment="https_proxy=http://127.0.0.1:7890"
+	Environment="no_proxy=127.0.0.0/8,localhost,::1,.local"
 EOF
 	sudo chown root "${DOCKER_SERVICE_FILE}"
 	sudo systemctl daemon-reload
 	sudo systemctl restart docker
 
-	l_info "docker engine use proxy configured"
+	l_info "docker engine use proxy configured."
+else
+	l_skip "docker engine use proxy already configured."
 fi
