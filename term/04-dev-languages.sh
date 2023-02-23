@@ -69,3 +69,13 @@ if [ $? != 0 ]; then
 else
 	l_skip "$(python --version) already installed."
 fi
+
+# Install rust
+command -v rustc &> /dev/null
+if [ $? != 0 ]; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+	l_info "$(rustc --version) installed."
+else
+	l_skip "$(rustc --version) already installed."
+fi
