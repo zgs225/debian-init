@@ -21,6 +21,7 @@ install_via_apt libxmlsec1-dev
 install_via_apt libffi-dev
 install_via_apt liblzma-dev
 install_via_apt rcm
+install_via_apt tmux
 
 # Install clash-verge from remote
 CLASH_VERGE_DOWNLOAD_URL="https://jupyter.yuez.me:12388/clash/clients/clash-verge_1.2.3_amd64.deb"
