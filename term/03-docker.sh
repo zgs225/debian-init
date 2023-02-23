@@ -29,3 +29,26 @@ install_via_apt docker-ce-cli
 install_via_apt containerd.io
 install_via_apt docker-buildx-plugin
 install_via_apt docker-compose-plugin
+
+DOCKER_SERVICE_DIR=/etc/systemd/system/docker.service.d
+DOCKER_SERVICE_FILE="${DOCKER_SERVICE_DIR}/http-proxy.conf"
+
+if [ ! -d "${DOCKER_SERVICE_DIR}" ]; then
+	sudo mkdir -p "${DOCKER_SERVICE_DIR}"
+fi
+
+if [ ! -s "${DOCKER_SERVICE_FILE}" ]; then
+	sudo touch "${DOCKER_SERVICE_FILE}"
+	sudo chown ${USER} "${DOCKER_SERVICE_FILE}"
+	cat <<-EOF  > "${DOCKER_SERVICE_FILE}"
+	[Service]
+	Environment="HTTP_RPOXY=http://127.0.0.1:7890"
+	Environment="HTTPS_RPOXY=http://127.0.0.1:7890"
+	Environment="NO_PROXY=127.0.0.0/8,localhost,::1,.local"
+EOF
+	sudo chown root "${DOCKER_SERVICE_FILE}"
+	sudo systemctl daemon-reload
+	sudo systemctl restart docker
+
+	l_info "docker engine use proxy configured"
+fi
