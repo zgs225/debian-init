@@ -22,8 +22,8 @@ install_via_apt libffi-dev
 install_via_apt liblzma-dev
 install_via_apt rcm
 install_via_apt tmux
-
-# Install clash-verge from remote
-CLASH_VERGE_DOWNLOAD_URL="https://jupyter.yuez.me:12388/clash/clients/clash-verge_1.2.3_amd64.deb"
-CLASH_VERGE_PACKAGE="clash-verge"
-install_remote_deb $CLASH_VERGE_DOWNLOAD_URL $CLASH_VERGE_PACKAGE
+install_via_apt mysql-client-core-8.0
+install_via_apt redis-tools
+install_via_apt ca-certificates
+install_via_apt gnupg
+install_via_apt lsb-release

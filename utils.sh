@@ -26,8 +26,9 @@ function install_via_apt() {
 	sudo dpkg --list "$PACKAGE" > /dev/null 2>&1
 
 	if [ $? != 0 ]; then
-		l_info "Installing $PACKAGE"
+		l_info "installing $PACKAGE"
 		sudo apt install -y $PACKAGE
+		l_info "package ${PACKAGE} installed."
 	else
 		l_skip "package $PACKAGE already installed."
 	fi
@@ -53,4 +54,18 @@ function install_remote_deb() {
 	sudo dpkg -i $FILE_NAME
 
 	rm $FILE_NAME
+}
+
+function install_via_flatpak() {
+	PACKAGE=$1
+	HUB="flathub"
+
+	flatpak info "$PACKAGE" &> /dev/null
+	if [ $? != 0 ]; then
+		l_info "installing $PACKAGE"
+		flatpak install -y "${HUB}"  "${PACKAGE}"
+		l_info "package ${PACKAGE} installed."
+	else
+		l_skip "${PACKAGE} already installed."
+	fi
 }
