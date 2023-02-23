@@ -21,20 +21,36 @@ function run_scripts_in_dir() {
 }
 
 function install_via_apt() {
-	if [ $# == 1 ]; then
-		CMD=$1
-		PACKAGE=$1
-	else
-		CMD=$1
-		PACKAGE=$2
-	fi
+	PACKAGE=$1
 
-	command -v $CMD > /dev/null
+	sudo dpkg --list "$PACKAGE" > /dev/null 2>&1
 
 	if [ $? != 0 ]; then
 		l_info "Installing $PACKAGE"
-		apt install -y $PACKAGE
+		sudo apt install -y $PACKAGE
 	else
 		l_skip "package $PACKAGE already installed."
 	fi
+}
+
+function install_remote_deb() {
+	URL=$1
+
+	if [ $# == 2 ]; then
+		PACKAGE=$2
+	fi
+
+	if [ -n "$PACKAGE" ]; then
+		sudo dpkg --list "$PACKAGE" > /dev/null 2>&1
+		if [ $? == 0 ]; then
+			l_skip "package $PACKAGE already installed."
+			return
+		fi
+	fi
+
+	FILE_NAME=$(basename $URL)
+	http --download $URL -o "${FILE_NAME}"
+	sudo dpkg -i $FILE_NAME
+
+	rm $FILE_NAME
 }

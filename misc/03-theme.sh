@@ -2,6 +2,7 @@
 
 . ./utils.sh
 
+# Install NERD font
 FONT="Sauce Code Pro"
 DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/SourceCodePro.zip"
 
@@ -18,8 +19,8 @@ else
 
 	sys_font_dir=/usr/local/share/fonts
 	font_dir="$sys_font_dir/NerdFonts"
-	mkdir -p $font_dir
-	find ./SourceCodePro \( -name '*.ttf' -and -not -name '*Windows*' \) -exec cp -f {} "$font_dir" \;
+	sudo mkdir -p $font_dir
+	find ./SourceCodePro \( -name '*.ttf' -and -not -name '*Windows*' \) -exec sudo cp -f {} "$font_dir" \;
 
 	fc-cache -f
 	fc-list | grep -i "$FONT"
@@ -29,3 +30,17 @@ else
 	rm -rf SourceCodePro
 fi
 
+# Setup terminal theme
+THEME=gruvbox-dark
+
+install_via_apt dconf-cli
+install_via_apt uuid-runtime
+
+http --download https://codeload.github.com/Gogh-Co/Gogh/zip/refs/tags/v242 -o gogh.zip
+unzip -q gogh.zip
+cd Gogh-242/themes
+export TERMINAL=gnome-terminal
+${SH} ${THEME}.sh
+
+cd ../..
+rm -rf Gogh-242 gogh.zip
