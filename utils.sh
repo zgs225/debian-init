@@ -113,3 +113,29 @@ function install_prebuilt_bin() {
 		l_info "${CMD} installed."
 	fi
 }
+
+function set_go_env() {
+	KEY=$1
+	VAL=$2
+
+	command -v go &> /dev/null
+
+	if [ $? != 0 ]; then
+		l_error "can't set go env caused by command go not found."
+		return 1
+	fi
+
+	OLDVAL=$(go env "${KEY}")
+
+	if [ ! -z "${OLDVAL}" ]; then
+		if [[ ",${VAL}," = *",${OLDVAL},"* ]]; then
+			l_skip "go env ${KEY}=${VAL} already configured."
+			return
+		fi
+		VAL="${OLDVAL},${VAL}"
+	fi
+
+	go env -w "${KEY}=${VAL}"
+
+	l_info "go env ${KEY}=${VAL}"
+}
