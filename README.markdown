@@ -34,3 +34,11 @@ Initialize my debian environment for development.
 * WPS
 
 等
+
+## 使用方式
+
+下载仓库后，执行：
+
+``` bash
+./main.sh
+```
