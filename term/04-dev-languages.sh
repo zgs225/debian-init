@@ -79,3 +79,14 @@ if [ $? != 0 ]; then
 else
 	l_skip "$(rustc --version) already installed."
 fi
+
+# Install protobuf compiler and its tools
+TRIPLE_GATEWAY_VERSION=e316e53ee241c94282ad37d0b12e9af61eb50bfb
+
+install_via_apt protobuf-compiler
+install_via_go google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+install_via_go google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+install_via_go github.com/dubbogo/tools/cmd/protoc-gen-go-triple@v1.0.9
+install_via_go "github.com/zgs225/dubbo-go-gateway/protoc-gen-triple-gateway@${TRIPLE_GATEWAY_VERSION}"
+install_via_go "github.com/zgs225/dubbo-go-gateway/protoc-gen-openapiv2@${TRIPLE_GATEWAY_VERSION}"
+install_via_go github.com/zgs225/protoc-gen-go-gorm@latest

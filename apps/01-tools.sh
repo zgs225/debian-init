@@ -17,3 +17,4 @@ install_via_flatpak com.bitwarden.desktop
 install_via_flatpak com.tencent.wemeet
 install_via_flatpak com.jetbrains.CLion
 install_via_flatpak com.jetbrains.IntelliJ-IDEA-Ultimate
+install_via_flatpak org.remmina.Remmina
