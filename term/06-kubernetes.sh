@@ -10,3 +10,6 @@ install_prebuilt_bin kubectl "${KUBECTL_URL}"
 
 KIND_URL="https://kind.sigs.k8s.io/dl/v0.17.0/kind-${OS}-${ARCH}"
 install_prebuilt_bin kind "${KIND_URL}"
+
+HELM_URL="https://get.helm.sh/helm-v3.11.1-${OS}-${ARCH}.tar.gz"
+install_prebuilt_bin helm "${HELM_URL}"

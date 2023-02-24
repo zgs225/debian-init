@@ -44,7 +44,7 @@ if [ ! -s "${DOCKER_SERVICE_FILE}" ]; then
 	[Service]
 	Environment="http_proxy=http://127.0.0.1:7890"
 	Environment="https_proxy=http://127.0.0.1:7890"
-	Environment="no_proxy=127.0.0.0/8,localhost,::1,.local"
+	Environment="no_proxy=127.0.0.0/8,localhost,::1,.local,172.16.21.0/24"
 EOF
 	sudo chown root "${DOCKER_SERVICE_FILE}"
 	sudo systemctl daemon-reload

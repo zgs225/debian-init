@@ -27,3 +27,4 @@ install_via_apt redis-tools
 install_via_apt ca-certificates
 install_via_apt gnupg
 install_via_apt lsb-release
+install_via_apt bat
