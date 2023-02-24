@@ -15,7 +15,7 @@ if [ $? != 0 ]; then
 	sudo chmod a+x /usr/local/go/bin/go
 	echo 'export PATH=$PATH:/usr/local/go/bin' >> "${PROFILE_FILE}"
 	source "${PROFILE_FILE}"
-	l_info "golang $(go version) installed."
+	l_success "golang $(go version) installed."
 	rm -f go.tar.gz
 else
 	l_skip "golang $(go version) already installed"
@@ -26,7 +26,7 @@ if [ -z "$NVM_DIR" ]; then
 	l_info "installing nvm"
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 	source "${PROFILE_FILE}"
-	nvm --version
+    l_success "$(nvm --version) installed."
 else
 	. ${NVM_DIR}/nvm.sh
 	l_skip "nvm $(nvm --version) already installed."
@@ -36,8 +36,8 @@ fi
 command -v node &> /dev/null 
 if [ $? != 0 ]; then
 	nvm install --lts --default
-	l_info "$(node --version)"
 	corepack enable
+	l_success "$(node --version) installed."
 else
 	l_skip "node $(node --version) already installed."
 fi
@@ -53,7 +53,7 @@ if [ $? != 0 ]; then
 	eval "\$(pyenv init -)"
 EOF
 	source $PROFILE_FILE
-	l_info "$(pyenv --version) installed."
+	l_success "$(pyenv --version) installed."
 else
 	l_skip "$(pyenv --version) already installed."
 fi
@@ -65,7 +65,7 @@ if [ $? != 0 ]; then
 	pyenv install "${PYTHON_VESION}"
 	pyenv rehash
 	pyenv global "${PYTHON_VESION}"
-	l_info "$(python --version) installed."
+	l_success "$(python --version) installed."
 else
 	l_skip "$(python --version) already installed."
 fi
@@ -75,7 +75,7 @@ command -v rustc &> /dev/null
 if [ $? != 0 ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
-	l_info "$(rustc --version) installed."
+	l_success "$(rustc --version) installed."
 else
 	l_skip "$(rustc --version) already installed."
 fi

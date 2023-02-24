@@ -10,5 +10,5 @@ if [ "$CURRENT_SHELL" == "$(which zsh)" ]; then
 	l_skip "default shell of current user already set to zsh"
 else
 	chsh -s $(which zsh)
-	l_info "set zsh as default."
+	l_success "set zsh as default."
 fi

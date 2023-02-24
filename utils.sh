@@ -3,23 +3,36 @@
 ROOT_DIR=$(pwd)
 SH=/bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+CLEAR='\033[0m'
+
 function l_skip() {
-	echo "[SKIP] " $@
+	echo "[SKIP]" $@
 }
 
 function l_info() {
-	echo "[INFO] " $@
+	echo "[INFO]" $@
 }
 
 function l_error() {
-	echo "[ERRO] " $@
+    printf "${RED}[ERRO] ${@}${CLEAR}\n"
+}
+
+function l_success() {
+    printf "${GREEN}[SUCC] ${@}${CLEAR}\n"
+}
+
+function l_warn() {
+    printf "${YELLOW}[WARN] ${@}${CLEAR}\n"
 }
 
 function run_scripts_in_dir() {
 	DIR=$1
 	FILES=$(find "$ROOT_DIR/$DIR" -name '*.sh' | sort)
 	for FILE in $FILES; do
-		l_info "Run $FILE"
+		l_warn "run $FILE"
 		$SH $FILE
 	done
 }
@@ -32,7 +45,7 @@ function install_via_apt() {
 	if [ $? != 0 ]; then
 		l_info "installing $PACKAGE"
 		sudo apt install -y $PACKAGE
-		l_info "package ${PACKAGE} installed."
+		l_success "package ${PACKAGE} installed."
 	else
 		l_skip "package $PACKAGE already installed."
 	fi
@@ -58,6 +71,8 @@ function install_remote_deb() {
 	sudo dpkg -i $FILE_NAME
 
 	rm $FILE_NAME
+
+    l_success "deb package ${PACKAGE} installed."
 }
 
 function install_via_flatpak() {
@@ -68,7 +83,7 @@ function install_via_flatpak() {
 	if [ $? != 0 ]; then
 		l_info "installing $PACKAGE"
 		flatpak install -y "${HUB}"  "${PACKAGE}"
-		l_info "package ${PACKAGE} installed."
+		l_success "package ${PACKAGE} installed."
 	else
 		l_skip "${PACKAGE} already installed."
 	fi
@@ -95,7 +110,7 @@ function install_via_go() {
 		l_skip "go package ${PACKAGE} already installed."
 	else
 		go install "${PACKAGE}"
-		l_info "go package ${PACKAGE} installed."
+		l_success "go package ${PACKAGE} installed."
 	fi
 }
 
@@ -110,7 +125,7 @@ function install_prebuilt_bin() {
 		http --download "${URL}" -o "${CMD}"
 		chmod a+x "${CMD}"
 		sudo mv "${CMD}" "${BIN_DIR}/${CMD}"
-		l_info "${CMD} installed."
+		l_success "${CMD} installed."
 	fi
 }
 
@@ -137,5 +152,5 @@ function set_go_env() {
 
 	go env -w "${KEY}=${VAL}"
 
-	l_info "go env ${KEY}=${VAL}"
+	l_success "go env ${KEY}=${VAL}"
 }

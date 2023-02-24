@@ -50,7 +50,7 @@ EOF
 	sudo systemctl daemon-reload
 	sudo systemctl restart docker
 
-	l_info "docker engine use proxy configured."
+	l_success "docker engine use proxy configured."
 else
 	l_skip "docker engine use proxy already configured."
 fi
