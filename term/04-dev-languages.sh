@@ -90,3 +90,6 @@ install_via_go github.com/dubbogo/tools/cmd/protoc-gen-go-triple@v1.0.9
 install_via_go "github.com/zgs225/dubbo-go-gateway/protoc-gen-triple-gateway@${TRIPLE_GATEWAY_VERSION}"
 install_via_go "github.com/zgs225/dubbo-go-gateway/protoc-gen-openapiv2@${TRIPLE_GATEWAY_VERSION}"
 install_via_go github.com/zgs225/protoc-gen-go-gorm@latest
+
+# Install other golang packages
+install_via_go github.com/zgs225/simple-server@v1.0.0

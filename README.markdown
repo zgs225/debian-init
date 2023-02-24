@@ -16,6 +16,9 @@ Initialize my debian environment for development.
 * 通过 dotfiles 配置 terminal
 * 安装 Sauce Code Pro Nerd 字体，作为代码字体
 * 设置 terminal 主题
+* kubectl 和用于本地 kubernetes 集群的 kind
+
+等
 
 软件：
 

@@ -98,3 +98,18 @@ function install_via_go() {
 		l_info "go package ${PACKAGE} installed."
 	fi
 }
+
+function install_prebuilt_bin() {
+	CMD=$1
+	URL=$2
+	BIN_DIR=/usr/bin
+
+	if [ -f "${BIN_DIR}/${CMD}" ]; then
+		l_skip "${CMD} already installed."
+	else
+		http --download "${URL}" -o "${CMD}"
+		chmod a+x "${CMD}"
+		sudo mv "${CMD}" "${BIN_DIR}/${CMD}"
+		l_info "${CMD} installed."
+	fi
+}

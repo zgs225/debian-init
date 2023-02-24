@@ -19,3 +19,5 @@ install_via_flatpak com.jetbrains.CLion
 install_via_flatpak com.jetbrains.IntelliJ-IDEA-Ultimate
 install_via_flatpak org.remmina.Remmina
 install_via_flatpak com.wps.Office
+install_via_flatpak rest.insomnia.Insomnia
+install_via_flatpak org.wireshark.Wireshark
