@@ -40,7 +40,7 @@ function run_scripts_in_dir() {
 function install_via_apt() {
 	PACKAGE=$1
 
-	sudo dpkg --list "$PACKAGE" > /dev/null 2>&1
+	sudo dpkg -L "$PACKAGE" > /dev/null 2>&1
 
 	if [ $? != 0 ]; then
 		l_info "installing $PACKAGE"

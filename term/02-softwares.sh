@@ -31,3 +31,5 @@ install_via_apt bat
 install_via_apt ntfs-3g
 install_via_apt clangd-15
 install_via_apt ansible
+install_via_apt tree
+install_via_apt silversearcher-ag
