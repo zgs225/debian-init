@@ -21,3 +21,4 @@ install_via_flatpak org.remmina.Remmina
 install_via_flatpak com.wps.Office
 install_via_flatpak rest.insomnia.Insomnia
 install_via_flatpak org.wireshark.Wireshark
+install_via_flatpak net.xmind.XMind8
