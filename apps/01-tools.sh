@@ -22,3 +22,4 @@ install_via_flatpak com.wps.Office
 install_via_flatpak rest.insomnia.Insomnia
 install_via_flatpak org.wireshark.Wireshark
 install_via_flatpak net.xmind.XMind8
+install_via_flatpak dev.k8slens.OpenLens
