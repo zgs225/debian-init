@@ -33,3 +33,4 @@ install_via_apt clangd-15
 install_via_apt ansible
 install_via_apt tree
 install_via_apt silversearcher-ag
+install_via_apt universal-ctags
