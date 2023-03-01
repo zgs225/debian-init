@@ -8,6 +8,8 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 CLEAR='\033[0m'
 
+PREBUILT_PACKAGE_DIR="/opt/apps"
+
 function l_skip() {
 	echo "[SKIP]" $@
 }
@@ -127,6 +129,44 @@ function install_prebuilt_bin() {
 		sudo mv "${CMD}" "${BIN_DIR}/${CMD}"
 		l_success "${CMD} installed."
 	fi
+}
+
+function install_prebuilt_package() {
+    URL=$1
+    FILENAME=$(basename ${URL})
+    DOWNLOAD_FILE="${FILENAME}.download"
+    INSTALLED_DIR="${PREBUILT_PACKAGE_DIR}/${FILENAME%%.*}"
+
+    if [ -d "${INSTALLED_DIR}" ]; then
+        l_skip "prebuilt package ${FILENAME} already installed."
+    else
+        http -dco "${DOWNLOAD_FILE}" "${URL}"
+        mv "${DOWNLOAD_FILE}" "${FILENAME}"
+
+        sudo mkdir -p "${INSTALLED_DIR}"
+
+        if [ "${FILENAME}" == *".tar.gz" ]; then
+            l_info "extracting ${FILENAME}..."
+            sudo tar -C "${INSTALLED_DIR}" -xzf "${FILENAME}" --strip-components 1
+            if [ $? != 0 ]; then
+                l_error "failed to install prebuilt package ${FILENAME}"
+                return 1
+            fi
+        fi
+
+        if [ "${FILENAME}" == *".zip" ]; then
+            l_info "extracting ${FILENAME}..."
+            sudo unzip -d "${INSTALLED_DIR}" "${FILENAME}"
+            if [ $? != 0 ]; then
+                l_error "failed to install prebuilt package ${FILENAME}"
+                return 1
+            fi
+        fi
+
+        rm "${FILENAME}"
+
+        l_success "${FILENAME} installed."
+    fi
 }
 
 function set_go_env() {

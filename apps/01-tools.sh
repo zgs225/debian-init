@@ -10,7 +10,6 @@ CLASH_VERGE_PACKAGE="clash-verge"
 install_remote_deb $CLASH_VERGE_DOWNLOAD_URL $CLASH_VERGE_PACKAGE
 
 install_via_flatpak com.google.Chrome
-install_via_flatpak com.jetbrains.GoLand
 install_via_flatpak com.visualstudio.code
 install_via_flatpak io.dbeaver.DBeaverCommunity
 install_via_flatpak com.bitwarden.desktop
@@ -23,3 +22,5 @@ install_via_flatpak rest.insomnia.Insomnia
 install_via_flatpak org.wireshark.Wireshark
 install_via_flatpak net.xmind.XMind8
 install_via_flatpak dev.k8slens.OpenLens
+
+install_prebuilt_package "https://download-cdn.jetbrains.com/go/goland-2022.3.2.tar.gz"
