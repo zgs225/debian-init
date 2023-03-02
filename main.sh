@@ -8,3 +8,5 @@ run_scripts_in_dir term
 run_scripts_in_dir apps
 
 l_success "done."
+
+print_logo

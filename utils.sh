@@ -10,6 +10,14 @@ CLEAR='\033[0m'
 
 PREBUILT_PACKAGE_DIR="/opt/apps"
 
+function print_logo() {
+    echo " ___  ____ _           _     _       "
+    echo "|_ _||__ /| |_  _ __ (_) __| | ___  "
+    echo " | |   |_ \| __|| '__|| |/ _\` |/ __| "
+    echo " | |  ___) | |_ | |   | | (_| |\__ \ "
+    echo "|___||____/ \__||_|   |_|\__,_||___/ "
+}
+
 function l_skip() {
 	echo "[SKIP]" $@
 }
