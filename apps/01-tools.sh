@@ -9,8 +9,10 @@ CLASH_VERGE_DOWNLOAD_URL="https://jupyter.yuez.me:12388/clash/clients/clash-verg
 CLASH_VERGE_PACKAGE="clash-verge"
 install_remote_deb $CLASH_VERGE_DOWNLOAD_URL $CLASH_VERGE_PACKAGE
 
+# Install vscode from deb package
+install_remote_deb "https://az764295.vo.msecnd.net/stable/92da9481c0904c6adfe372c12da3b7748d74bdcb/code_1.76.0-1677667493_amd64.deb" code
+
 install_via_flatpak com.google.Chrome
-install_via_flatpak com.visualstudio.code
 install_via_flatpak io.dbeaver.DBeaverCommunity
 install_via_flatpak com.bitwarden.desktop
 install_via_flatpak com.tencent.wemeet
@@ -23,5 +25,6 @@ install_via_flatpak org.wireshark.Wireshark
 install_via_flatpak net.xmind.XMind8
 install_via_flatpak dev.k8slens.OpenLens
 install_via_flatpak org.telegram.desktop
+
 
 install_prebuilt_package "https://download-cdn.jetbrains.com/go/goland-2022.3.2.tar.gz"

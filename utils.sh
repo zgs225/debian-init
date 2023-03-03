@@ -78,7 +78,7 @@ function install_remote_deb() {
 
 	FILE_NAME=$(basename $URL)
 	http --download $URL -o "${FILE_NAME}"
-	sudo dpkg -i $FILE_NAME
+	sudo dpkg -i "./${FILE_NAME}"
 
 	rm $FILE_NAME
 
