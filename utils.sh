@@ -6,6 +6,7 @@ SH=/bin/bash
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
+GRAY='\033[0;37m'
 CLEAR='\033[0m'
 
 PREBUILT_PACKAGE_DIR="/opt/apps"
@@ -21,7 +22,7 @@ function print_logo() {
 }
 
 function l_skip() {
-	echo "[SKIP]" $@
+    printf "${GRAY}[SKIP] ${@}${CLEAR}\n"
 }
 
 function l_info() {
