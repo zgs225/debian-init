@@ -9,4 +9,5 @@ run_scripts_in_dir apps
 
 l_success "done."
 
+printf "\n\n"
 print_logo
