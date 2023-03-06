@@ -142,6 +142,23 @@ function install_prebuilt_bin() {
 	fi
 }
 
+function install_prebuilt_zipbin() {
+    CMD=$1
+    URL=$2
+    BIN_DIR=/usr/bin
+
+    if [ -f "${BIN_DIR}/${CMD}" ]; then
+        l_skip "${CMD} already installed."
+    else
+        http --download "${URL}" -o "${CMD}.zip"
+        unzip "${CMD}.zip"
+        chmod a+x "${CMD}"
+        sudo mv "${CMD}" "${BIN_DIR}/${CMD}"
+        rm "${CMD}.zip"
+        l_success "${CMD} installed."
+    fi
+}
+
 function install_prebuilt_package() {
     URL=$1
     FILENAME=$(basename ${URL})
