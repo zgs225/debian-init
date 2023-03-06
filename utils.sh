@@ -1,5 +1,8 @@
 #!/bin/bash
 
+AUTHOR="yuez"
+EMAIL="i@yuez.me"
+
 ROOT_DIR=$(pwd)
 SH=/bin/bash
 

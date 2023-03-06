@@ -6,11 +6,19 @@
 
 # Login into bitwarden
 if ! bw login --check > /dev/null; then
-    bw login --raw
+    l_info "login into bitwarden with email ${EMAIL}."
+    bw login --raw "${EMAIL}" "${PASSWORD}" > "${HOME}/.bw_session"
     l_success "bitwarden login."
 else
     l_skip "bitwarden is already logged in."
 fi
+
+BW_SESSION=$(cat "${HOME}/.bw_session")
+if [ -z "${BW_SESSION}" ]; then
+    l_error "bitwarden session is empty."
+    exit 1
+fi
+export BW_SESSION="${BW_SESSION}"
 
 # Sync bitwarden
 bw sync > /dev/null
@@ -65,3 +73,5 @@ EOF
 
     l_success "wireguard client configuration file is configured."
 fi
+
+unset BW_SESSION
