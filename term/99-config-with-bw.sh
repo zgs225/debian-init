@@ -74,4 +74,43 @@ EOF
     l_success "wireguard client configuration file is configured."
 fi
 
+# Config ssh private key with bitwarden
+SSH_PRIVATE_KEY_FILE="${HOME}/.ssh/id_rsa"
+if test -f "${SSH_PRIVATE_KEY_FILE}"; then
+    l_skip "ssh private key file is already exists."
+else
+    l_info "get ssh private key file from bitwarden."
+    SSH_PRIVATE_KEY=$(bw get item "SSH Private Key" | jq -c '.login.password' | tr -d '"')
+    [ ! -d "${HOME}/.ssh" ] && mkdir -p "${HOME}/.ssh"
+    echo "${SSH_PRIVATE_KEY}" | base64 -d > "${SSH_PRIVATE_KEY_FILE}"
+    chmod 0600 "${SSH_PRIVATE_KEY_FILE}"
+    l_success "ssh private key file is configured."
+fi
+
+# Config ssh public key with bitwarden
+SSH_PUBLIC_KEY_FILE="${HOME}/.ssh/id_rsa.pub"
+if test -f "${SSH_PUBLIC_KEY_FILE}"; then
+    l_skip "ssh public key file is already exists."
+else
+    l_info "get ssh public key file from bitwarden."
+    SSH_PUBLIC_KEY=$(bw get item "SSH Public Key" | jq -c '.login.password' | tr -d '"')
+    [ ! -d "${HOME}/.ssh" ] && mkdir -p "${HOME}/.ssh"
+    echo "${SSH_PUBLIC_KEY}" | base64 -d > "${SSH_PUBLIC_KEY_FILE}"
+    chmod 0600 "${SSH_PUBLIC_KEY_FILE}"
+    l_success "ssh public key file is configured."
+fi
+
+# Config LightsailDefaultKey-ap-southeast-1.pem with bitwarden
+LIGHTSAIL_DEFAULT_KEY_FILE="${HOME}/.ssh/LightsailDefaultKey-ap-southeast-1.pem"
+if test -f "${LIGHTSAIL_DEFAULT_KEY_FILE}"; then
+    l_skip "LightsailDefaultKey-ap-southeast-1.pem file is already exists."
+else
+    l_info "get LightsailDefaultKey-ap-southeast-1.pem file from bitwarden."
+    LIGHTSAIL_DEFAULT_KEY=$(bw get item "LightsailDefaultKey-ap-southeast-1.pem" | jq -c '.login.password' | tr -d '"')
+    [ ! -d "${HOME}/.ssh" ] && mkdir -p "${HOME}/.ssh"
+    echo "${LIGHTSAIL_DEFAULT_KEY}" | base64 -d > "${LIGHTSAIL_DEFAULT_KEY_FILE}"
+    chmod 0600 "${LIGHTSAIL_DEFAULT_KEY_FILE}"
+    l_success "LightsailDefaultKey-ap-southeast-1.pem file is configured."
+fi
+
 unset BW_SESSION
