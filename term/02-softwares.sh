@@ -34,3 +34,6 @@ install_via_apt ansible
 install_via_apt tree
 install_via_apt silversearcher-ag
 install_via_apt universal-ctags
+install_via_apt wireguard
+install_via_apt wireguard-tools
+install_via_apt resolvconf
