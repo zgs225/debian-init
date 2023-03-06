@@ -12,3 +12,8 @@ else
 	env RCRC=$DOTFILES_DIR/rcrc rcup
 	l_success "dotfiles configured."
 fi
+
+# Set server of bitwarden
+BW_SERVER="https://bit.yuez.me"
+bw config server "${BW_SERVER}" > /dev/null
+l_success "bitwarden server configured to ${BW_SERVER}."
