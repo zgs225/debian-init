@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# utities
+
 AUTHOR="yuez"
 EMAIL="i@yuez.me"
 
