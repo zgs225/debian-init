@@ -7,7 +7,7 @@
 # Login into bitwarden
 if ! bw login --check > /dev/null; then
     l_info "login into bitwarden with email ${EMAIL}."
-    bw login --raw "${EMAIL}" "${PASSWORD}" > "${HOME}/.bw_session"
+    bw login --raw "${EMAIL}" > "${HOME}/.bw_session"
     l_success "bitwarden login."
 else
     l_skip "bitwarden is already logged in."
@@ -28,13 +28,13 @@ l_info "bitwarden sync."
 if [ ! -f "${HOME}/.netrc" ]; then
     USERNAME="zhaigs5"
     PASSWORD=$(bw get item 10.126.138.28 | jq -c '.fields[] | select (.name == "API Key") | .value' | tr -d '"')
-	cat <<-EOF > "${HOME}/.netrc"
-	machine 10.126.138.28 login ${USERNAME} password ${PASSWORD}
+    cat <<-EOF > "${HOME}/.netrc"
+    machine 10.126.138.28 login ${USERNAME} password ${PASSWORD}
 EOF
-	chmod 0600 "${HOME}/.netrc"
-	l_success "netrc file confiigured."
+    chmod 0600 "${HOME}/.netrc"
+    l_success "netrc file confiigured."
 else
-	l_skip "netrc file is already exists."
+    l_skip "netrc file is already exists."
 fi
 
 set_go_env GOPRIVATE  172.16.21.59
@@ -61,7 +61,7 @@ else
     [Peer]
     PublicKey = zWsKalVtEi5sMQdCjy6Y47M9wB48FnuXBCd8tfIMHWU=
     PresharedKey = EzOpd0EAxVgiKRxDp1rHNC33Dj9vzlIpd2xmLYh7pNg=
-    AllowedIPs = 0.0.0.0/0, ::/0
+    AllowedIPs = 10.247.113.0/24, fd54:5612:3279:4624::/64
     Endpoint = ${ENDPOINT}
     PersistentKeepalive = 25
 EOF
