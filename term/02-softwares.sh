@@ -37,5 +37,6 @@ install_via_apt universal-ctags
 install_via_apt wireguard
 install_via_apt wireguard-tools
 install_via_apt resolvconf
+install_via_apt rclone
 
 install_prebuilt_zipbin bw "https://vault.bitwarden.com/download/?app=cli&platform=linux"
