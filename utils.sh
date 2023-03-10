@@ -77,7 +77,7 @@ function install_remote_deb() {
     fi
 
     if [ -n "$PACKAGE" ]; then
-        sudo dpkg --list "$PACKAGE" > /dev/null 2>&1
+        sudo dpkg -s "$PACKAGE" &> /dev/null
         if [ $? == 0 ]; then
             l_skip "package $PACKAGE already installed."
             return
