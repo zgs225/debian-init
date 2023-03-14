@@ -113,4 +113,31 @@ else
     l_success "LightsailDefaultKey-ap-southeast-1.pem file is configured."
 fi
 
+# AWS configuration with bitwarden
+AWS_CONFIG_FILE="${HOME}/.aws/config"
+if test -f "${AWS_CONFIG_FILE}"; then
+    l_skip "aws configuration file is already exists."
+else
+    [ ! -d "${HOME}/.aws" ] && mkdir -p "${HOME}/.aws"
+
+    l_info "get aws configuration from bitwarden."
+    AWS_ACCESS_KEY_ID=$(bw get item "AWS Config" | jq -c '.login.username' | tr -d '"')
+    AWS_SECRET_ACCESS_KEY=$(bw get item "AWS Config" | jq -c '.login.password' | tr -d '"')
+
+    cat <<-EOF > "${AWS_CONFIG_FILE}"
+    [default]
+    aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+    aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+    region = ap-southeast-1
+    output = json
+EOF
+    chmod 0600 "${AWS_CONFIG_FILE}"
+    ARN=$(aws sts get-caller-identity | jq -c '.Arn' | tr -d '"')
+    if [ -z "${ARN}" ]; then
+        l_warn "get ARN error, please check your aws configuration or network."
+    else
+        l_success "aws configuration file is configured. ARN: ${ARN}"
+    fi
+fi
+
 unset BW_SESSION
