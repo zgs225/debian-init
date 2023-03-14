@@ -15,11 +15,22 @@ fi
 
 if [ ! -s "${DOCKER_SOURCE_LIST_FILE}" ]; then
 	l_info "installing docker repository source..."
-	PACKAGE_BASE=$(awk -F= -v key="DISTRIB_CODENAME" '$1 == key {print $NF}' /etc/upstream-release/lsb-release)
-	sudo echo \
-	"deb [arch=$(dpkg --print-architecture) signed-by=${DOCKER_KEY_FILE}] https://download.docker.com/linux/ubuntu \
-	${PACKAGE_BASE} stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-	sudo apt update
+    if [ -f /etc/upstream-release/lsb-release ]; then
+        . /etc/upstream-release/lsb-release
+    elif [ -f /etc/lsb-release ]; then
+        . /etc/lsb-release
+    fi
+    if [ -z "${DISTRIB_CODENAME}" ]; then
+        DISTRIB_CODENAME=$(lsb_release -cs)
+    fi
+    if [ -z "${DISTRIB_CODENAME}" ]; then
+        l_error "DISTRIB_CODENAME is empty."
+    else
+        sudo echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=${DOCKER_KEY_FILE}] https://download.docker.com/linux/ubuntu \
+        ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt update
+    fi
 else
 	l_skip "docker repsoitory source already installed."
 fi
