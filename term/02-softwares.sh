@@ -39,5 +39,8 @@ install_via_apt wireguard-tools
 install_via_apt resolvconf
 install_via_apt rclone
 install_via_apt awscli
+install_via_apt tesseract-ocr
+install_via_apt libtesseract-dev
+install_via_apt tesseract-ocr-chi-sim
 
 install_prebuilt_zipbin bw "https://vault.bitwarden.com/download/?app=cli&platform=linux"

@@ -61,7 +61,7 @@ function install_via_apt() {
     sudo dpkg -L "$PACKAGE" > /dev/null 2>&1
 
     if [ $? != 0 ]; then
-        l_info "installing $PACKAGE"
+        l_warn "installing $PACKAGE"
         sudo apt install -y $PACKAGE
         l_success "package ${PACKAGE} installed."
     else
@@ -84,6 +84,8 @@ function install_remote_deb() {
         fi
     fi
 
+    l_warn "installing $PACKAGE"
+
     FILE_NAME=$(basename $URL)
     http --download $URL -o "${FILE_NAME}"
     sudo dpkg -i "./${FILE_NAME}"
@@ -99,7 +101,7 @@ function install_via_flatpak() {
 
     flatpak info "$PACKAGE" &> /dev/null
     if [ $? != 0 ]; then
-        l_info "installing $PACKAGE"
+        l_warn "installing $PACKAGE"
         flatpak install -y "${HUB}"  "${PACKAGE}"
         l_success "package ${PACKAGE} installed."
     else
@@ -127,6 +129,7 @@ function install_via_go() {
     if [ -f "${BIN_PATH}/${CMD}" ]; then
         l_skip "go package ${PACKAGE} already installed."
     else
+        l_warn "installing go package ${PACKAGE}"
         go install "${PACKAGE}"
         l_success "go package ${PACKAGE} installed."
     fi
@@ -140,6 +143,7 @@ function install_prebuilt_bin() {
     if [ -f "${BIN_DIR}/${CMD}" ]; then
         l_skip "${CMD} already installed."
     else
+        l_warn "installing ${CMD}"
         http --download "${URL}" -o "${CMD}"
         chmod a+x "${CMD}"
         sudo mv "${CMD}" "${BIN_DIR}/${CMD}"
@@ -155,6 +159,7 @@ function install_prebuilt_zipbin() {
     if [ -f "${BIN_DIR}/${CMD}" ]; then
         l_skip "${CMD} already installed."
     else
+        l_warn "installing ${CMD}"
         http --download "${URL}" -o "${CMD}.zip"
         unzip "${CMD}.zip"
         chmod a+x "${CMD}"
@@ -173,6 +178,7 @@ function install_prebuilt_package() {
     if [ -d "${INSTALLED_DIR}" ]; then
         l_skip "prebuilt package ${FILENAME} already installed."
     else
+        l_warn "installing prebuilt package ${FILENAME}"
         http -dco "${DOWNLOAD_FILE}" "${URL}"
         mv "${DOWNLOAD_FILE}" "${FILENAME}"
 
@@ -202,6 +208,28 @@ function install_prebuilt_package() {
     fi
 }
 
+function install_via_pip() {
+    PACKAGE=$1
+
+    command -v pip &> /dev/null
+    if [ $? != 0 ]; then
+        l_error "command pip not found."
+        return 1
+    fi
+
+    pip show "${PACKAGE}" &> /dev/null
+    if [ $? != 0 ]; then
+        l_warn "installing python ${PACKAGE}"
+        pip install "${PACKAGE}"
+        if [ $? != 0 ]; then
+            l_error "failed to install ${PACKAGE}"
+            return 1
+        fi
+    else
+        l_skip "${PACKAGE} already installed."
+    fi
+}
+
 function set_go_env() {
     KEY=$1
     VAL=$2
@@ -226,4 +254,21 @@ function set_go_env() {
     go env -w "${KEY}=${VAL}"
 
     l_success "go env ${KEY}=${VAL}"
+}
+
+function ctrl_c() {
+    l_error "user interrupt"
+    exit 1
+}
+
+function get_distrib_codename() {
+    if [ -f /etc/upstream-release/lsb-release ]; then
+        . /etc/upstream-release/lsb-release
+    elif [ -f /etc/lsb-release ]; then
+        . /etc/lsb-release
+    fi
+    if [ -z "${DISTRIB_CODENAME}" ]; then
+        DISTRIB_CODENAME=$(lsb_release -cs)
+    fi
+    echo "${DISTRIB_CODENAME}"
 }

@@ -15,14 +15,7 @@ fi
 
 if [ ! -s "${DOCKER_SOURCE_LIST_FILE}" ]; then
 	l_info "installing docker repository source..."
-    if [ -f /etc/upstream-release/lsb-release ]; then
-        . /etc/upstream-release/lsb-release
-    elif [ -f /etc/lsb-release ]; then
-        . /etc/lsb-release
-    fi
-    if [ -z "${DISTRIB_CODENAME}" ]; then
-        DISTRIB_CODENAME=$(lsb_release -cs)
-    fi
+    DISTRIB_CODENAME=$(get_distrib_codename)
     if [ -z "${DISTRIB_CODENAME}" ]; then
         l_error "DISTRIB_CODENAME is empty."
     else
