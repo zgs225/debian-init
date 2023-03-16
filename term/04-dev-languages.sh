@@ -81,7 +81,7 @@ else
 fi
 
 # Install protobuf compiler and its tools
-TRIPLE_GATEWAY_VERSION=e316e53ee241c94282ad37d0b12e9af61eb50bfb
+TRIPLE_GATEWAY_VERSION=496870077a8ba32245f0e1ce10fd568ef07478be
 
 install_via_apt protobuf-compiler
 install_via_go google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
