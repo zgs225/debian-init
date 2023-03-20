@@ -94,6 +94,7 @@ install_via_go github.com/zgs225/protoc-gen-go-gorm@latest
 # Install other golang packages
 install_via_go github.com/zgs225/simple-server@v1.0.0
 install_via_go github.com/cosmtrek/air@latest
+install_via_go github.com/swaggo/swag/cmd/swag@latest
 
 # Install python packages
 install_via_pip black
