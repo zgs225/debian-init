@@ -2,6 +2,21 @@
 
 . ./utils.sh
 
+if [ ! -z "${HTTP_PROXY}" ]; then
+    apt_proxy_file="/etc/apt/apt.conf.d/01proxy"
+    if [ -f "$apt_proxy_file" ]; then
+        l_skip "apt proxy already configured"
+    else
+        sudo tee "$apt_proxy_file" <<EOF
+Acquire {
+HTTP::proxy "${HTTP_PROXY}";
+HTTPS::proxy "${HTTPS_PROXY}}";
+}
+EOF
+        l_success "Configured apt proxy"
+    fi
+fi
+
 install_via_apt git
 install_via_apt neovim
 install_via_apt curl
