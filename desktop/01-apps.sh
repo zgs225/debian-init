@@ -25,6 +25,8 @@ install_via_flatpak org.wireshark.Wireshark
 install_via_flatpak net.xmind.XMind8
 install_via_flatpak dev.k8slens.OpenLens
 install_via_flatpak org.telegram.desktop
+install_via_flatpak com.qq.QQ
+install_via_flatpak com.discordapp.Discord
 
 install_prebuilt_package "https://download-cdn.jetbrains.com/go/goland-2022.3.2.tar.gz"
 install_via_apt conky-all
