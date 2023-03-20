@@ -7,47 +7,17 @@
 ╚═════╝ ╚══════╝╚═════╝ ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝      ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   
 </pre>
 
-Initialize my debian environment for development. 
+初始化基于 `debian` 的 Linux 环境。它会分别设置命令行环境与桌面环境，如果没有桌面服务，
+则会跳过桌面环境的初始化。
 
-会自动安装软件或者配置系统，详情如下。
+初始化命令行环境时，会先将 `shell` 设置为 `zsh`，然后进行配置、安装常用软件、安装 
+docker 、编程语言、然后通过 `bitwarden` 进行密钥等配置。桌面端则会通过 `flatpak`, 
+或者远程下载 `deb` 进行常用软件、开发软件的安装。
 
-命令行：
+## 代理
 
-* 安装 zsh, 并设为默认登陆 shell
-* neovim 和 它的配置
-* 安装常用的开发工具
-* 安装 docker engine 和 docker-compose
-* 安装 nvm, node, pyenv, python3.9, golang 1.20, rust
-* 安装 protobuf 和一些相关的插件
-* 通过 dotfiles 配置 terminal
-* 安装 Sauce Code Pro Nerd 字体，作为代码字体
-* 设置 terminal 主题
-* kubectl 和用于本地 kubernetes 集群的 kind
+在 `utils.sh` 有配置代理的变量，如果该变量有值，则会为一些软件设置代理。详情如下：
 
-等
-
-软件：
-
-* appimagelauncher
-* clash verge
-* 钉钉
-* 腾讯会议
-* Chrome
-* VS Code
-* DBeaver
-* Bitwarden
-* IDEA
-* GoLand
-* CLine
-* VNC 客户端
-* WPS
-
-等
-
-## 使用方式
-
-下载仓库后，执行：
-
-``` bash
-./main.sh
-```
+* `apt`：创建 `/etc/apt/apt.conf.d/01proxy` 文件，为 `apt` 添加代理访问
+* `docker`：创建 `/etc/systemd/system/docker.service.d/http-proxy.conf` 文件，为
+  `docker` 添加代理访问
