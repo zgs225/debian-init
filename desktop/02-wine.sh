@@ -92,7 +92,7 @@ fi
 WINE_ROOT="${HOME}/.wine"
 WINE_ARCH="win64"
 
-WINE_WECHAT_ROOT="${WINE_ROOT}/wechat/drive_c/Program Files/Tencent/WeChat"
+WINE_WECHAT_ROOT="${WINE_ROOT}/wechat/drive_c/Program Files (x86)/Tencent/WeChat"
 
 if [ ! -d "${WINE_WECHAT_ROOT}" ]; then
     l_warn "preparing wine wechat"
