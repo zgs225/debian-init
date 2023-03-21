@@ -53,8 +53,28 @@ else
     l_skip "winehq repository already present"
 fi
 
-install_via_apt winehq-stable
-install_via_apt winetricks
+install_via_apt winehq-staging
+
+# Install winetricks by script
+if [ ! -f "/usr/local/bin/winetricks" ]; then
+    l_warn "Installing winetricks"
+    wget -O /tmp/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+    sudo mv /tmp/winetricks /usr/local/bin/winetricks
+    sudo chmod +x /usr/local/bin/winetricks
+    l_success "winetricks installed"
+
+    # Install winetricks bash completion
+    wget -O /tmp/winetricks-completion.bash https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks-completion.bash
+    sudo mv /tmp/winetricks-completion.bash /usr/share/bash-completion/completions/winetricks
+    l_success "winetricks bash completion installed"
+
+    # Download latest man page
+    wget -O /tmp/winetricks.1 https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks.1
+    sudo mv /tmp/winetricks.1 /usr/share/man/man1/winetricks.1
+else
+    l_skip "winetricks already installed"
+fi
+
 
 # Install a shared wine mono at /usr/share/wine/mono/
 if [ ! -d "/usr/share/wine/mono" ]; then
@@ -70,17 +90,20 @@ fi
 
 
 WINE_ROOT="${HOME}/.wine"
-WINE_ARCH="win32"
+WINE_ARCH="win64"
 
 WINE_WECHAT_ROOT="${WINE_ROOT}/wechat/drive_c/Program Files/Tencent/WeChat"
 
 if [ ! -d "${WINE_WECHAT_ROOT}" ]; then
     l_warn "preparing wine wechat"
-    WINEPREFIX="${WINE_ROOT}/wechat" WINEARCH="${WINE_ARCH}" winetricks -q riched20
+    WINEPREFIX="${WINE_ROOT}/wechat" WINEARCH="${WINE_ARCH}" winetricks -q win7 riched20 corefonts vcrun2015 opensymbol
+    WINEPREFIX="${WINE_ROOT}/wechat" wine reg add 'HKCU\Control Panel\Desktop' /v LogPixels /t REG_DWORD /d 192 /f
     l_info "downloading wechat"
     wget -O /tmp/wechat.exe https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe
     WINEPREFIX="${WINE_ROOT}/wechat" WINEARCH="${WINE_ARCH}" wine /tmp/wechat.exe
     rm /tmp/wechat.exe
+
+
     l_success "wine wechat installed"
 else
     l_skip "wine wechat already installed"
