@@ -103,7 +103,6 @@ if [ ! -d "${WINE_WECHAT_ROOT}" ]; then
     WINEPREFIX="${WINE_ROOT}/wechat" WINEARCH="${WINE_ARCH}" wine /tmp/wechat.exe
     rm /tmp/wechat.exe
 
-
     l_success "wine wechat installed"
 else
     l_skip "wine wechat already installed"

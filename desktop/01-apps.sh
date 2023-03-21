@@ -11,6 +11,7 @@ install_remote_deb $CLASH_VERGE_DOWNLOAD_URL $CLASH_VERGE_PACKAGE
 
 install_remote_deb "https://az764295.vo.msecnd.net/stable/92da9481c0904c6adfe372c12da3b7748d74bdcb/code_1.76.0-1677667493_amd64.deb" code
 install_remote_deb "https://issuepcdn.baidupcs.com/issue/netdisk/LinuxGuanjia/4.17.7/baidunetdisk_4.17.7_amd64.deb" baidunetdisk
+install_remote_deb "https://github.com/f3d-app/f3d/releases/download/v1.3.1/f3d-1.3.1-Linux.deb" f3d
 
 install_via_flatpak com.google.Chrome
 install_via_flatpak io.dbeaver.DBeaverCommunity
