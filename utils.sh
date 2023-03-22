@@ -21,6 +21,11 @@ HTTP_PROXY=${HTTP_PROXY:-"http://localhost:7890"}
 HTTPS_PROXY=${HTTPS_PROXY:-"http://localhost:7890"}
 SOCKS_PROXY=${SOCKS_PROXY:-"socks5://localhost:7890"}
 
+# Wine 根目录
+WINE_ROOT="${HOME}/.wine"
+# Wine 的架构，可选值 win32 和 win64
+WINE_ARCH="win64"
+
 function print_logo() {
     echo "██████╗ ███████╗██████╗ ██╗ █████╗ ███╗   ██╗      ██╗███╗   ██╗██╗████████╗";
     echo "██╔══██╗██╔════╝██╔══██╗██║██╔══██╗████╗  ██║      ██║████╗  ██║██║╚══██╔══╝";
