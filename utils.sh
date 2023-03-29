@@ -282,3 +282,69 @@ function get_distrib_codename() {
     fi
     echo "${DISTRIB_CODENAME}"
 }
+
+function get_extension() {
+    FILENAME=$1
+    EXT="${FILENAME##*.}"
+    if [ "${EXT}" == "gz" ]; then
+        FILENAME="${FILENAME%.*}"
+        EXT2="${FILENAME##*.}"
+        EXT="${EXT2}.${EXT}"
+    fi
+    echo "${EXT}"
+}
+
+function install_font() {
+    SYS_FONT_DIR=/usr/local/share/fonts
+    FONT_NAME=$1
+    FONT_URL=$2
+
+    if [ -z "${FONT_NAME}" ]; then
+        l_error "font name is empty"
+        return 1
+    fi
+
+    if [ -z "${FONT_URL}" ]; then
+        l_error "font url is empty"
+        return 1
+    fi
+
+    if [ -f "${SYS_FONT_DIR}/${FONT_NAME}" ] || [ -d "${SYS_FONT_DIR}/${FONT_NAME}" ]; then
+        l_skip "font ${FONT_NAME} already installed."
+    else
+        l_warn "installing font ${FONT_NAME}"
+        tmpdir=$(mktemp -d)
+        cwd=$(pwd)
+        cd "${tmpdir}"
+        http --download "${FONT_URL}"
+        downloaded_file=$(find . -type f | head -n 1 | xargs -I {} basename {})
+        downloaded_file_ext=$(get_extension "${downloaded_file}")
+        if [ "${downloaded_file_ext}" == "zip"  ]; then
+            unzip "${downloaded_file}"
+        fi
+
+        if [ "${downloaded_file_ext}" == "tar.gz" ]; then
+            tar -xzf "${downloaded_file}"
+        fi
+
+        font_files=$(find . -type f -name "*.ttf" -o -name "*.otf" -o -name "*.ttc")
+        if [ -z "${font_files}" ]; then
+            l_error "no font file found in ${downloaded_file}"
+            return 1
+        fi
+
+        font_dir="${SYS_FONT_DIR}"
+
+        # 如果字体文件数量大于1，说明是一个字体集合，需要创建一个目录来存放
+        if [ $(echo "${font_files}" | wc -l) -gt 1 ]; then
+            font_dir="${SYS_FONT_DIR}/${FONT_NAME}"
+            sudo mkdir -p "${font_dir}"
+        fi
+
+        sudo cp -r ${font_files} "${font_dir}"
+
+        cd "${cwd}"
+        rm -rf "${tmpdir}"
+        l_success "font ${FONT_NAME} installed."
+    fi
+}
