@@ -11,5 +11,12 @@ install_prebuilt_bin kubectl "${KUBECTL_URL}"
 KIND_URL="https://kind.sigs.k8s.io/dl/v0.17.0/kind-${OS}-${ARCH}"
 install_prebuilt_bin kind "${KIND_URL}"
 
-HELM_URL="https://get.helm.sh/helm-v3.11.1-${OS}-${ARCH}.tar.gz"
-install_prebuilt_bin helm "${HELM_URL}"
+if [ command -v helm &> /dev/null ]; then
+    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    chmod 700 get_helm.sh
+    ./get_helm.sh
+    rm get_helm.sh
+    l_success "helm installed"
+else
+    l_skip "helm already installed"
+fi
