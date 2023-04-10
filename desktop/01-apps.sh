@@ -31,6 +31,8 @@ install_via_flatpak com.discordapp.Discord
 install_via_flatpak org.freecadweb.FreeCAD
 install_via_flatpak net.cozic.joplin_desktop
 install_via_flatpak com.seafile.Client
+install_via_flatpak org.raspberrypi.rpi-imager
+install_via_flatpak com.github.hluk.copyq
 
 install_prebuilt_package "https://download-cdn.jetbrains.com/go/goland-2022.3.2.tar.gz"
 install_via_apt conky-all

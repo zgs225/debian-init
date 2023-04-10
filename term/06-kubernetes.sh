@@ -17,6 +17,9 @@ if [ command -v helm &> /dev/null ]; then
     ./get_helm.sh
     rm get_helm.sh
     l_success "helm installed"
+
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    l_success "bitnami repo added"
 else
     l_skip "helm already installed"
 fi

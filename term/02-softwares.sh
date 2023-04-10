@@ -60,5 +60,6 @@ install_via_apt tesseract-ocr-chi-sim
 install_via_apt htop
 install_via_apt lm-sensors
 install_via_apt devscripts
+install_via_apt socat
 
 install_prebuilt_zipbin bw "https://vault.bitwarden.com/download/?app=cli&platform=linux"
