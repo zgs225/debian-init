@@ -33,28 +33,3 @@ install_via_apt docker-ce-cli
 install_via_apt containerd.io
 install_via_apt docker-buildx-plugin
 install_via_apt docker-compose-plugin
-
-if [ ! -z "${HTTP_PROXY}" ]; then
-    DOCKER_SERVICE_DIR=/etc/systemd/system/docker.service.d
-    DOCKER_SERVICE_FILE="${DOCKER_SERVICE_DIR}/http-proxy.conf"
-
-    if [ ! -d "${DOCKER_SERVICE_DIR}" ]; then
-        sudo mkdir -p "${DOCKER_SERVICE_DIR}"
-    fi
-
-    if [ ! -s "${DOCKER_SERVICE_FILE}" ]; then
-        l_warn "configuring docker engine use proxy..."
-        sudo tee "${DOCKER_SERVICE_FILE}" <<-EOF
-[Service]
-Environment="http_proxy=${HTTP_PROXY}"
-Environment="https_proxy=${HTTPS_PROXY}"
-Environment="no_proxy=127.0.0.0/8,localhost,::1,.local,172.16.21.0/24"
-EOF
-        sudo systemctl daemon-reload
-        sudo systemctl restart docker
-
-        l_success "docker engine use proxy configured."
-    else
-        l_skip "docker engine use proxy already configured."
-    fi
-fi
