@@ -17,9 +17,9 @@ CLEAR='\033[0m'
 PREBUILT_PACKAGE_DIR="/opt/apps"
 
 # 代理的地址，如果不需要代理，可以注释掉
-HTTP_PROXY=${HTTP_PROXY:-"http://localhost:7890"}
-HTTPS_PROXY=${HTTPS_PROXY:-"http://localhost:7890"}
-SOCKS_PROXY=${SOCKS_PROXY:-"socks5://localhost:7890"}
+# HTTP_PROXY=${HTTP_PROXY:-"http://localhost:7890"}
+# HTTPS_PROXY=${HTTPS_PROXY:-"http://localhost:7890"}
+# SOCKS_PROXY=${SOCKS_PROXY:-"socks5://localhost:7890"}
 
 # Wine 根目录
 WINE_ROOT="${HOME}/.wine"
