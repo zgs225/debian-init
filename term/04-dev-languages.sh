@@ -10,7 +10,7 @@ source $PROFILE_FILE
 command -v go > /dev/null
 if [ $? != 0 ]; then
 	l_info "installing golang..."
-	http --download https://go.dev/dl/go1.20.1.linux-amd64.tar.gz -o go.tar.gz
+	http --download "https://jupyter.yuez.me:24129/clash/clients/go1.20.4.linux-amd64.tar.gz" -o go.tar.gz
 	sudo tar -C /usr/local -xzf go.tar.gz
 	sudo chmod a+x /usr/local/go/bin/go
 	echo 'export PATH=$PATH:/usr/local/go/bin' >> "${PROFILE_FILE}"
