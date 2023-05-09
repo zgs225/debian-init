@@ -64,3 +64,5 @@ install_via_apt socat
 install_via_apt bear
 
 install_prebuilt_zipbin bw "https://vault.bitwarden.com/download/?app=cli&platform=linux"
+
+install_remote_deb "https://github.com/ellie/atuin/releases/download/v14.0.1/atuin_14.0.1_amd64.deb" atuin
