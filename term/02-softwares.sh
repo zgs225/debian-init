@@ -18,7 +18,6 @@ EOF
 fi
 
 install_via_apt git
-install_via_apt neovim
 install_via_apt curl
 install_via_apt httpie
 install_via_apt jq
@@ -67,3 +66,17 @@ install_via_apt cifs-utils
 install_prebuilt_zipbin bw "https://vault.bitwarden.com/download/?app=cli&platform=linux"
 
 install_remote_deb "https://github.com/ellie/atuin/releases/download/v14.0.1/atuin_14.0.1_amd64.deb" atuin
+
+install_prebuilt_package https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+
+NEOVIM_BIN="/usr/bin/nvim"
+if [ -f "${NEOVIM_BIN}" ]; then
+    l_skip "neovim already installed."
+else
+    if [ -z "${PREBUILT_PACKAGE_DIR}" ]; then
+        l_error "PREBUILT_PACKAGE_DIR not set."
+        exit 1
+    fi
+    sudo ln -s "${PREBUILT_PACKAGE_DIR}/nvim-linux64/bin/nvim" "${NEOVIM_BIN}"
+    l_success "neovim soft link created."
+fi
