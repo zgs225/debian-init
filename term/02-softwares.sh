@@ -18,6 +18,7 @@ EOF
 fi
 
 install_via_apt git
+install_via_apt git-lfs
 install_via_apt curl
 install_via_apt httpie
 install_via_apt jq
