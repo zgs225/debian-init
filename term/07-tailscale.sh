@@ -1,3 +1,4 @@
+#!/bin/bash
 . ./utils.sh
 
 DISTRO=$(get_distrib_codename)
