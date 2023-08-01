@@ -12,6 +12,8 @@ run_scripts_in_dir misc
 
 if [ -z "$DISPLAY" ]; then
     l_skip "not in desktop environment, skip desktop scripts."
+elif [ ! -z "WSL_DISTRO_NAME" ]; then
+    l_skip "in WSL, skip desktop scripts."
 else
     run_scripts_in_dir desktop
 fi

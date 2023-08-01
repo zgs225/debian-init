@@ -17,6 +17,7 @@ EOF
     fi
 fi
 
+install_via_apt zip
 install_via_apt git
 install_via_apt git-lfs
 install_via_apt curl
@@ -38,6 +39,7 @@ install_via_apt liblzma-dev
 install_via_apt rcm
 install_via_apt tmux
 install_via_apt mysql-client-core-8.0
+install_via_apt postgresql-client-common
 install_via_apt redis-tools
 install_via_apt ca-certificates
 install_via_apt gnupg
