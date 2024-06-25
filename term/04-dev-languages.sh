@@ -58,6 +58,15 @@ else
 	l_skip "$(pyenv --version) already installed."
 fi
 
+# Install pyenv-virtualenv
+pyenv_virtualenv_dir=$(pyenv root)/plugins/pyenv-virtualenv
+if [ ! -d "${pyenv_virtualenv_dir}" ]; then
+    l_info "install pyenv-virtualenv to ${pyenv_virtualenv_dir}"
+    git clone https://github.com/pyenv/pyenv-virtualenv.git ${pyenv_virtualenv_dir}
+else
+    l_skip "pyenv-virtualenv already installed."
+fi
+
 # Install python via pyenv
 command -v python &> /dev/null
 if [ $? != 0 ]; then
