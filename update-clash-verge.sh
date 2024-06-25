@@ -50,5 +50,6 @@ rm clash-verge.deb
 
 # 给 clash 添加 net_admin 权限以支持 tun 模式
 setcap CAP_NET_BIND_SERVICE,CAP_NET_ADMIN=+ep /usr/bin/clash
+setcap CAP_NET_BIND_SERVICE,CAP_NET_ADMIN=+ep /usr/bin/clash-meta
 
 l_success "更新完成, 请重启 clash verge"
